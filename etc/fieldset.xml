@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Diglin GmbH - Switzerland
+ *
+ * @author      Sylvain Rayé <support at diglin.com>
+ * @category    Diglin
+ * @package     Diglin_Username
+ * @copyright   Copyright (c) 2011-2016 Diglin (http://www.diglin.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:DataObject/etc/fieldset.xsd">
+    <scope id="global">
+        <fieldset id="customer_account">
+            <field name="username">
+                <aspect name="create" />
+                <aspect name="update" />
+                <aspect name="to_order" targetField="customer_username" />
+            </field>
+        </fieldset>
+        <fieldset id="checkout_onepage_billing">
+            <field name="customer_username">
+                <aspect name="to_customer" targetField="username" />
+            </field>
+        </fieldset>
+        <fieldset id="checkout_onepage_quote">
+            <field name="customer_username">
+                <aspect name="to_customer" targetField="username" />
+            </field>
+        </fieldset>
+    </scope>
+</config>

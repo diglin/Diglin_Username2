@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Diglin GmbH - Switzerland
+ *
+ * @author      Sylvain Rayé <support at diglin.com>
+ * @category    Diglin
+ * @package     Diglin_Zopim
+ * @copyright   Copyright (c) 2011-2016 Diglin (http://www.diglin.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Config/etc/system_file.xsd">
+    <system>
+        <section id="username" translate="label" sortOrder="1000" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Username by Diglin GmbH</label>
+            <tab>customer</tab>
+            <resource>Diglin_Username::config_username</resource>
+            <group id="general" translate="label" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Username Configuration</label>
+                <field id="enabled" type="select" translate="label" sortOrder="10" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Enable Username Support</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="frontend" type="select" translate="label" sortOrder="15" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Allow frontend edit</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Allow the customer to edit his username in "My Account"]]></comment>
+                </field>
+
+                <field id="max_length" type="text" translate="label comment" sortOrder="30" showInDefault="1">
+                    <label>Maximum length of the username</label>
+                    <comment><![CDATA[What is the maximum length of the string username that you want to accept? By default, it's 30 characters ]]></comment>
+                </field>
+
+                <field id="min_length" translate="label comment" sortOrder="40" showInDefault="1" type="text">
+                    <label>Minimum length of the username</label>
+                    <comment><![CDATA[What is the minimum length of the string username that you want to accept? By default, it's 6 characters ]]></comment>
+                </field>
+
+                <field id="input_validation" type="select" translate="label comment" sortOrder="50" showInDefault="1">
+                    <label>Input Validation</label>
+                    <source_model>Diglin\Username\Model\Config\Source\Inputvalidation</source_model>
+                    <comment><![CDATA[What kind of username do you want to accept? You can set the value 'Default' which accept letters, digits and the special characters '_-' ]]></comment>
+                </field>
+
+                <field id="input_validation_custom" type="text" translate="label comment" sortOrder="60" showInDefault="1">
+                    <label>Custom Input Validation</label>
+                    <comment><![CDATA[Provide here a PCRE regex. e.g. <strong>/^[\w-]*$/</strong>. More info at <a href="http://php.net/manual/en/reference.pcre.pattern.syntax.php">PHP Manual</a>]]></comment>
+                    <depends>
+                        <field id="input_validation">custom</field>
+                    </depends>
+                </field>
+
+                <field id="input_validation_custom_message" type="text" translate="label comment" sortOrder="70" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Custom Input Validation - Error Message</label>
+                    <comment><![CDATA[Message to show to the user in case of error</a>]]></comment>
+                    <depends>
+                        <field id="input_validation">custom</field>
+                    </depends>
+                </field>
+
+                <field id="case_sensitive" type="select" translate="label comment" sortOrder="80" showInDefault="1">
+                    <label>Case Sensitive Username</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Do you want to make the username case sensitive? If not case sensitive, the username will be saved in lowercase. The idea to save in lowercase is to not irritate the user in case he provides a wrong username case.]]></comment>
+                </field>
+
+                <field id="generate" type="button" translate="label comment" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Generate username</label>
+                    <comment><![CDATA[Generate a username for each customer who doesn't already have one.]]></comment>
+                    <frontend_model>Diglin\Username\Block\Config\Form\Field\Generate</frontend_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

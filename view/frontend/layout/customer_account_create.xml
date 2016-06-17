@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Diglin GmbH - Switzerland
+ *
+ * @author      Sylvain Rayé <support at diglin.com>
+ * @category    Diglin
+ * @package     Diglin_
+ * @copyright   Copyright (c) 2011-2016 Diglin (http://www.diglin.com)
+ */
+-->
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/layout_generic.xsd">
+<referenceBlock name="customer_form_register">
+    <action method="setTemplate" ifconfig="username/general/enabled">
+        <argument name="template" xsi:type="string">Diglin_Username::form/register.phtml</argument>
+    </action>
+    <!--<arguments>--><!-- @todo doesn't work on my magento 2 version, although official document says that's the proper solution. Check with latest Magento 2 version -->
+    <!--<argument name="template" xsi:type="string">Diglin_Username::form/edit.phtml</argument>-->
+    <!--</arguments>-->
+</referenceBlock>
+</layout>

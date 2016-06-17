@@ -1,0 +1,30 @@
+<?php
+/**
+ * Diglin GmbH - Switzerland
+ *
+ * @author      Sylvain Rayé <support at diglin.com>
+ * @category    Diglin
+ * @package     Diglin_
+ * @copyright   Copyright (c) 2011-2016 Diglin (http://www.diglin.com)
+ */
+
+// @codingStandardsIgnoreFile
+
+/* @var $block Diglin\Username\Block\Widget\Username */
+
+$username = $block->getUsername();
+?>
+<div class="field username<?php if ($block->isRequired()) echo ' required' ?>">
+    <label class="label" for="<?php /* @escapeNotVerified */ echo $block->getFieldId('username')?>"><span><?php /* @escapeNotVerified */ echo __('Username') ?></span></label>
+    <div class="control">
+        <?php if ($block->isEditable()): ?>
+        <input type="text" id="<?php /* @escapeNotVerified */ echo $block->getFieldId('username') ?>"
+               name="<?php /* @escapeNotVerified */ echo $block->getFieldName('username') ?>"
+               value="<?php echo $block->escapeHtml($username) ?>"
+               title="<?php /* @escapeNotVerified */ echo $block->getStoreLabel('username') ?>"
+               class="input-text <?php /* @escapeNotVerified */ echo $block->getAttributeValidationClass('username') ?>" <?php /* @escapeNotVerified */ echo $block->getFieldParams() ?> <?php if ($block->getAttributeValidationClass('username') == 'required-entry') echo ' data-validate="{required:true}"' ?>>
+        <?php else: ?>
+        <span><?php echo $block->escapeHtml($username); ?></span>
+        <?php endif; ?>
+    </div>
+</div>
