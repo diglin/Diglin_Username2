@@ -2,7 +2,7 @@
 
 Magento module which allows your customers to use a username and not only the email address as identifier
 
-*IMPORTANT*
+**IMPORTANT**
 It's a BETA. Lots of things have not been yet implemented or is a work in progress. For example checkout login doesn't work.
 
 ## Features
