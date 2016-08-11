@@ -11,6 +11,7 @@
 namespace Diglin\Username\Plugin\Model\ResourceModel;
 
 use Diglin\Username\Helper\Customer as CustomerHelper;
+use Diglin\Username\Helper\Customer;
 use Magento\Checkout\Helper\Data;
 use Magento\Config\Model\Config\Backend\Admin\Custom;
 use Magento\Customer\Model\Metadata\CustomerMetadata;
@@ -173,6 +174,7 @@ class CustomerRepositoryPlugin
      * @param \Magento\Customer\Api\Data\CustomerInterface $customer
      * @param InputException $exception
      * @return $this
+     * @throws InputException
      */
     private function validate(\Magento\Customer\Api\Data\CustomerInterface $customer, InputException $exception)
     {
@@ -181,7 +183,8 @@ class CustomerRepositoryPlugin
 
         $usernameAttribute = $this->getAttributeMetadata('username');
         if ($usernameAttribute !== null && $usernameAttribute->isRequired() && '' == trim($username)) {
-            $exception->addError(__(InputException::REQUIRED_FIELD, ['fieldName' => 'username']));
+            throw InputException::requiredField('username');
+//            $exception->addError(__(InputException::REQUIRED_FIELD, ['fieldName' => 'username']));
         }
 
         // Other rules are validated by the parent class because they are basic rules provided by Magento Core
@@ -203,7 +206,7 @@ class CustomerRepositoryPlugin
 
             if (!$validate->isValid($username)) {
                 if ($inputValidation == 'custom') {
-                    $message = new \Magento\Framework\Phrase($this->config->getValue('username/general/input_validation_custom_message'));
+                    $message = new \Magento\Framework\Phrase($this->config->getValue(Customer::CFG_INPUT_VALIDATION_CUSTOM_MESSAGE));
                 } else {
                     $message = __('Username is invalid! Only letters, digits and \'_-\' values are accepted.');
                 }

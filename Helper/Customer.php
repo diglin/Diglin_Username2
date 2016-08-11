@@ -23,7 +23,9 @@ class Customer extends \Magento\Framework\App\Helper\AbstractHelper
 {
     const CFG_FRONTEND = 'username/general/frontend';
     const CFG_INPUT_VALIDATION = 'username/general/input_validation';
+    const CFG_CASE_SENSITIVE = 'username/general/case_sensitive';
     const CFG_INPUT_VALIDATION_CUSTOM = 'username/general/input_validation_custom';
+    const CFG_INPUT_VALIDATION_CUSTOM_MESSAGE = 'username/general/input_validation_custom_message';
 
     /**
      * @var CustomerRepository
@@ -85,6 +87,11 @@ class Customer extends \Magento\Framework\App\Helper\AbstractHelper
 
         if ($list->getTotalCount() > 0) {
             foreach ($list->getItems() as $item) {
+
+                if ($this->isCaseSensitive() && $username != $item->getCustomAttribute('username')->getValue()) {
+                    return false;
+                }
+
                 return $item;
             }
         }
@@ -100,5 +107,13 @@ class Customer extends \Magento\Framework\App\Helper\AbstractHelper
     public function isEditableOnFrontend()
     {
         return $this->config->isSetFlag(self::CFG_FRONTEND);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCaseSensitive()
+    {
+        return $this->config->isSetFlag(self::CFG_CASE_SENSITIVE);
     }
 }
