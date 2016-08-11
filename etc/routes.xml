@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Diglin GmbH - Switzerland
+ *
+ * @author      Sylvain Rayé <support at diglin.com>
+ * @category    Diglin
+ * @package     Diglin_Username
+ * @copyright   Copyright (c) 2011-2016 Diglin (http://www.diglin.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="standard">
+        <route id="diglin_username" frontName="customer">
+            <module name="Diglin_Username" before="Magento_Customer" />
+        </route>
+    </router>
+</config>
