@@ -86,6 +86,9 @@ class ChangeEavAttribute implements ObserverInterface
                 $rules['input_validation'] = ''; // validation is done at save level of the customer model
             }
 
+            $usedInGrid = $this->config->getValue('username/general/grid');
+            $attributeUsernameModel->setData('is_used_in_grid', $usedInGrid);
+
             $attributeUsernameModel->setValidateRules($rules);
             $attributeUsernameModel->save();
         }
