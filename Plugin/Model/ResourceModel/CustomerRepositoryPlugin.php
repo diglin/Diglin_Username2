@@ -120,7 +120,9 @@ class CustomerRepositoryPlugin
 
         if ($customer->getId()) {
             $customerDataOriginal = $subject->get($customer->getEmail(), $customer->getWebsiteId());
-            $usernameOriginal = $customerDataOriginal->getCustomAttribute('username')->getValue();
+            if ($customerDataOriginal->getCustomAttribute('username')) {
+                $usernameOriginal = $customerDataOriginal->getCustomAttribute('username')->getValue();
+            }
         }
 
         if (!is_null($customerDataOriginal) && $usernameOriginal != $username) {
