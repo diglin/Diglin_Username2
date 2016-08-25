@@ -116,12 +116,20 @@ class CustomerRepositoryPlugin
     {
         $exception = new InputException();
         $customerDataOriginal = $usernameOriginal = null;
-        $username = $customer->getCustomAttribute('username')->getValue();
+
+        $usernameAttribute = $customer->getCustomAttribute('username');
+
+        if (is_null($usernameAttribute)) {
+            return [$customer, $passwordHash];
+        }
+
+        $username = $usernameAttribute->getValue();
 
         if ($customer->getId()) {
             $customerDataOriginal = $subject->get($customer->getEmail(), $customer->getWebsiteId());
-            if ($customerDataOriginal->getCustomAttribute('username')) {
-                $usernameOriginal = $customerDataOriginal->getCustomAttribute('username')->getValue();
+            $originalUsernameAttribute = $customerDataOriginal->getCustomAttribute('username');
+            if ($usernameAttribute) {
+                $usernameOriginal = $originalUsernameAttribute->getValue();
             }
         }
 
@@ -203,6 +211,10 @@ class CustomerRepositoryPlugin
                     $validate = $this->config->getValue(CustomerHelper::CFG_INPUT_VALIDATION_CUSTOM);
                     break;
             }
+
+//            if (!$this->config->isSetFlag('username/general/case_sensitive')) {
+//                $validate .= 'i';
+//            }
 
             $validate = new \Zend_Validate_Regex($validate);
 
