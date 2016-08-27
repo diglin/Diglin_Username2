@@ -194,7 +194,6 @@ class CustomerRepositoryPlugin
         $usernameAttribute = $this->getAttributeMetadata('username');
         if ($usernameAttribute !== null && $usernameAttribute->isRequired() && '' == trim($username)) {
             throw InputException::requiredField('username');
-//            $exception->addError(__(InputException::REQUIRED_FIELD, ['fieldName' => 'username']));
         }
 
         // Other rules are validated by the parent class because they are basic rules provided by Magento Core

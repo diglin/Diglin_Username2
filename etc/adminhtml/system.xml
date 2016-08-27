@@ -69,7 +69,7 @@
 
                 <field id="generate" type="button" translate="label comment" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Generate username</label>
-                    <comment><![CDATA[Generate a username for each customer who doesn't already have one.]]></comment>
+                    <comment><![CDATA[Generate a username for each customer who doesn't already have one. It will take in account the "Input validation" settings.]]></comment>
                     <frontend_model>Diglin\Username\Block\Config\Form\Field\Generate</frontend_model>
                 </field>
             </group>

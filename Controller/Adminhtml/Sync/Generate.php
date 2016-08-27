@@ -13,9 +13,11 @@ namespace Diglin\Username\Controller\Adminhtml\Sync;
 use Diglin\Username\Controller\Adminhtml\Sync;
 use Diglin\Username\Model\Generate\Flag;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\Config as AppConfig;
 use Magento\Eav\Model\Config;
 use Magento\Framework\App\ResourceConnection;
 use Magento\Framework\DB\LoggerInterface;
+use Diglin\Username\Helper\Customer as CustomerHelper;
 
 /**
  * Class Generate
@@ -42,20 +44,33 @@ class Generate extends Sync
      */
     private $resource;
 
+    /**
+     * @var AppConfig
+     */
+    private $config;
+
+    /**
+     * @var CustomerHelper
+     */
+    private $helper;
+
     public function __construct(
         Context $context,
         LoggerInterface $logger,
         Config $eavConfig,
-        ResourceConnection $resource
+        ResourceConnection $resource,
+        AppConfig $config,
+        CustomerHelper $helper
     )
     {
         parent::__construct($context);
 
         $this->logger = $logger;
         $this->eavConfig = $eavConfig;
+        $this->config = $config;
         $this->resource = $resource;
         $this->connection = $resource->getConnection('core_read');
-
+        $this->helper = $helper;
     }
 
     public function execute()
@@ -109,7 +124,7 @@ class Generate extends Sync
 
             foreach ($customers as $customer) {
 
-                $customer['value'] = $this->getUsername($customer);
+                $customer['value'] = $this->helper->generateUsername();
                 $customer['attribute_id'] = $usernameAttribute->getId();
 
                 unset($customer['email']);
@@ -128,18 +143,5 @@ class Generate extends Sync
             $flag->setHasErrors(true);
         }
         $flag->setState(Flag::STATE_FINISHED)->save();
-    }
-
-    /**
-     * @param $customer
-     * @return string
-     */
-    protected function getUsername($customer)
-    {
-        // @todo - add support for username depending on the username type supported in the configuration (only letters, digits, etc)
-        $email = $customer['email'];
-        $pos = strpos($email, '@');
-
-        return substr($email, 0, $pos) . substr(uniqid(), 0, 5) . $customer['entity_id'];
     }
 }
