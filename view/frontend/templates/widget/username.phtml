@@ -15,7 +15,9 @@
 $username = $block->getUsername();
 ?>
 <div class="field username<?php if ($block->isRequired()) echo ' required' ?>">
+    <?php if ($block->isEditable() || !$block->isEditable() && !empty($username)): ?>
     <label class="label" for="<?php /* @escapeNotVerified */ echo $block->getFieldId('username')?>"><span><?php /* @escapeNotVerified */ echo __('Username') ?></span></label>
+    <?php endif; ?>
     <div class="control">
         <?php if ($block->isEditable()): ?>
         <input type="text" id="<?php /* @escapeNotVerified */ echo $block->getFieldId('username') ?>"

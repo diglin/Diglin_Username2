@@ -8,10 +8,15 @@
  * @copyright   Copyright (c) 2011-2016 Diglin (http://www.diglin.com)
  */
 
-namespace Diglin\Username\Controller\Adminhtml\Username;
+namespace Diglin\Username\Controller\Adminhtml;
 
 abstract class Sync extends \Magento\Backend\App\Action
 {
+    /**
+     * Authorization level of a basic admin session
+     */
+    const ADMIN_USERNAME_RESOURCE = 'Diglin_Username::config_username';
+
     /**
      * Return file storage singleton
      *
@@ -30,5 +35,13 @@ abstract class Sync extends \Magento\Backend\App\Action
     protected function _getSyncFlag()
     {
         return $this->_getSyncSingleton()->loadSelf();
+    }
+
+    /**
+     * @return bool
+     */
+    protected function _isAllowed()
+    {
+        return $this->_authorization->isAllowed(static::ADMIN_USERNAME_RESOURCE);
     }
 }

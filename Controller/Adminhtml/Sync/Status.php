@@ -8,10 +8,10 @@
  * @copyright   Copyright (c) 2011-2016 Diglin (http://www.diglin.com)
  */
 
-namespace Diglin\Username\Controller\Adminhtml\Username\Sync;
+namespace Diglin\Username\Controller\Adminhtml\Sync;
 
 
-use Diglin\Username\Controller\Adminhtml\Username\Sync;
+use Diglin\Username\Controller\Adminhtml\Sync;
 use Diglin\Username\Model\Generate\Flag;
 use Magento\Backend\App\Action\Context;
 use Magento\Framework\Json\Helper\Data;

@@ -31,7 +31,10 @@ class Generate extends Field
      */
     public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element)
     {
-        $element->unsScope()->unsCanUseWebsiteValue()->unsCanUseDefaultValue();
+        $element
+            ->unsScope()
+            ->unsCanUseWebsiteValue()
+            ->unsCanUseDefaultValue();
 
         return parent::render($element);
     }
@@ -56,7 +59,7 @@ class Generate extends Field
      */
     public function getAjaxSyncUrl()
     {
-        return $this->getUrl('*/username_sync/generate');
+        return $this->getUrl('username/sync/generate');
     }
 
     /**
@@ -66,7 +69,7 @@ class Generate extends Field
      */
     public function getAjaxStatusUpdateUrl()
     {
-        return $this->getUrl('*/username_sync/syncstatus');
+        return $this->getUrl('username/sync/status');
     }
 
     /**

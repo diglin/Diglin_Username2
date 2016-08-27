@@ -8,9 +8,9 @@
  * @copyright   Copyright (c) 2011-2016 Diglin (http://www.diglin.com)
  */
 
-namespace Diglin\Username\Controller\Adminhtml\Username\Sync;
+namespace Diglin\Username\Controller\Adminhtml\Sync;
 
-use Diglin\Username\Controller\Adminhtml\Username\Sync;
+use Diglin\Username\Controller\Adminhtml\Sync;
 use Diglin\Username\Model\Generate\Flag;
 use Magento\Backend\App\Action\Context;
 use Magento\Eav\Model\Config;
@@ -47,14 +47,15 @@ class Generate extends Sync
         LoggerInterface $logger,
         Config $eavConfig,
         ResourceConnection $resource
-    ) {
+    )
+    {
+        parent::__construct($context);
 
         $this->logger = $logger;
         $this->eavConfig = $eavConfig;
         $this->resource = $resource;
         $this->connection = $resource->getConnection('core_read');
 
-        parent::__construct($context);
     }
 
     public function execute()
@@ -87,43 +88,38 @@ class Generate extends Sync
              */
             $select = $this->connection
                 ->select()
-                ->from(array('c' => $this->resource->getTableName('customer_entity')), array('email', 'entity_id', 'entity_type_id'))
+                ->from(array('c' => $this->resource->getTableName('customer_entity')), array('email', 'entity_id'))
                 ->group('c.entity_id');
 
             if (!empty($ids)) {
-                $select
-                    ->joinLeft(array('cev' => $this->resource->getTableName('customer_entity_varchar')), 'c.entity_id = cev.entity_id')
-                    ->where('cev.entity_id NOT IN (' . implode(',', $ids) . ')');
+                $select->where('c.entity_id NOT IN (' . implode(',', $ids) . ')');
             }
 
             // @todo - add support for Customer Website Share option (check that the username doesn't already exist in other websites)
-            // @todo - add support for username depending on the username type supported in the configuration (only letters, digits, etc)
 
             // Create username for old customers to prevent problem when creating an order as a guest
             $customers = $this->connection->fetchAll($select);
             $totalItemsDone = 0;
 
             $flagData['total_items'] = count($customers);
-            $flag->setFlagData($flagData)
+
+            $flag
+                ->setFlagData($flagData)
                 ->save();
 
             foreach ($customers as $customer) {
+
+                $customer['value'] = $this->getUsername($customer);
                 $customer['attribute_id'] = $usernameAttribute->getId();
-                $email = $customer['email'];
-                $pos = strpos($email, '@');
-                $customer['value'] = substr($email, 0, $pos) . substr(uniqid(), 0, 5) . $customer['entity_id'];
 
                 unset($customer['email']);
                 unset($customer['value_id']);
 
-                // I know - direct sql query here is not good but there is no DBA for replace query
-                $this->connection->query('REPLACE INTO '
-                    . $this->connection->getTableName('customer_entity_varchar')
-                    . ' SET entity_id = :entity_id, entity_type_id = :entity_type_id, attribute_id = :attribute_id, value = :value',
-                    $customer);
+                $this->connection->insert($this->connection->getTableName('customer_entity_varchar'), $customer);
 
                 $flagData['total_items_done'] = $totalItemsDone;
-                $flag->setFlagData($flagData)
+                $flag
+                    ->setFlagData($flagData)
                     ->save();
             }
 
@@ -134,4 +130,16 @@ class Generate extends Sync
         $flag->setState(Flag::STATE_FINISHED)->save();
     }
 
+    /**
+     * @param $customer
+     * @return string
+     */
+    protected function getUsername($customer)
+    {
+        // @todo - add support for username depending on the username type supported in the configuration (only letters, digits, etc)
+        $email = $customer['email'];
+        $pos = strpos($email, '@');
+
+        return substr($email, 0, $pos) . substr(uniqid(), 0, 5) . $customer['entity_id'];
+    }
 }
