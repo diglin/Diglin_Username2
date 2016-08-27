@@ -42,7 +42,7 @@
                 <field id="input_validation" type="select" translate="label comment" sortOrder="50" showInDefault="1">
                     <label>Input Validation</label>
                     <source_model>Diglin\Username\Model\Config\Source\Inputvalidation</source_model>
-                    <comment><![CDATA[What kind of username do you want to accept? You can set the value 'Default' which accept letters, digits and the special characters '_-' ]]></comment>
+                    <comment><![CDATA[What kind of username do you want to accept? You can set the value 'Default' which accept letters, digits and the special characters '_-'. Be aware that once the setting is defined and username are created, you MUST not change this setting.]]></comment>
                 </field>
 
                 <field id="input_validation_custom" type="text" translate="label comment" sortOrder="60" showInDefault="1">

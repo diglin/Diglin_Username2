@@ -15,6 +15,17 @@
  * @see \Magento\Customer\Block\Form\Login
  * @var $block \Magento\Customer\Block\Form\Login
  */
+
+$usernameLabel =  __('Email');
+$usernameInputType = 'email';
+$usernameInputValidation = ", 'validate-email':true";
+
+if ($this->helper('\Diglin\Username\Helper\Customer')->isEnabled()) {
+    $usernameLabel =  __('Email/Username');
+    $usernameInputType = 'text';
+    $usernameInputValidation = "";
+}
+
 ?>
 <div class="block block-customer-login">
     <div class="block-title">
@@ -30,9 +41,9 @@
             <fieldset class="fieldset login" data-hasrequired="<?php /* @escapeNotVerified */ echo __('* Required Fields') ?>">
                 <div class="field note"><?php /* @escapeNotVerified */ echo __('If you have an account, sign in with your email address.') ?></div>
                 <div class="field email required">
-                    <label class="label" for="email"><span><?php /* @escapeNotVerified */ echo __('Email/Username') ?></span></label>
+                    <label class="label" for="email"><span><?php /* @escapeNotVerified */ echo $usernameLabel ?></span></label>
                     <div class="control">
-                        <input name="login[username]" value="<?php echo $block->escapeHtml($block->getUsername()) ?>" <?php if ($block->isAutocompleteDisabled()) :?> autocomplete="off"<?php endif; ?> id="email" type="text" class="input-text" title="<?php /* @escapeNotVerified */ echo __('Email/Username') ?>" data-validate="{required:true}">
+                        <input name="login[username]" value="<?php echo $block->escapeHtml($block->getUsername()) ?>" <?php if ($block->isAutocompleteDisabled()) :?> autocomplete="off"<?php endif; ?> id="email" type="<?php echo $usernameInputType; ?>" class="input-text" title="<?php /* @escapeNotVerified */  echo $usernameLabel ?>" data-validate="{required:true<?php echo $usernameInputValidation; ?>}">
                     </div>
                 </div>
                 <div class="field password required">

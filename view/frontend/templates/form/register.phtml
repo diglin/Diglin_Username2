@@ -30,7 +30,7 @@
             </div>
         </div>
         <?php $_username = $block->getLayout()->createBlock('Diglin\Username\Block\Widget\Username') ?>
-        <?php if ($_username->isEnabled()): ?>
+        <?php if ($_username->isEnabled() && $_username->isEditable()): ?>
             <?php echo $_username
                 ->setUsername($block->getFormData()->getUsername())
                 ->setObject($block->getFormData())

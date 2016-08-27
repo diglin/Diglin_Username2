@@ -21,6 +21,7 @@ use Magento\Framework\App\Helper\Context;
  */
 class Customer extends \Magento\Framework\App\Helper\AbstractHelper
 {
+    const CFG_ENABLED                           = 'username/general/enabled';
     const CFG_FRONTEND                          = 'username/general/frontend';
     const CFG_INPUT_VALIDATION                  = 'username/general/input_validation';
     const CFG_CASE_SENSITIVE                    = 'username/general/case_sensitive';
@@ -109,6 +110,14 @@ class Customer extends \Magento\Framework\App\Helper\AbstractHelper
     public function isEditableOnFrontend()
     {
         return $this->config->isSetFlag(self::CFG_FRONTEND);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEnabled()
+    {
+        return $this->config->isSetFlag(self::CFG_ENABLED);
     }
 
     /**

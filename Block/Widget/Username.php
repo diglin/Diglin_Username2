@@ -85,7 +85,7 @@ class Username extends AbstractWidget
      */
     public function isEnabled()
     {
-        return ($this->_getAttribute('username') ? (bool)$this->_getAttribute('username')->isVisible() : false);
+        return $this->usernameHelper->isEnabled() && ($this->_getAttribute('username') ? (bool)$this->_getAttribute('username')->isVisible() : false);
     }
 
     /**
