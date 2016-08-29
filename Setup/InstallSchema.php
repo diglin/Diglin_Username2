@@ -68,7 +68,7 @@ class InstallSchema implements InstallSchemaInterface
                 'input'                 => 'text',
                 'required'              => 0,
                 'user_defined'          => 1,
-                'unique'                => 1,
+                'unique'                => 0,
                 'system'                => 0,
                 'group'                 => $groupId,
                 'is_used_in_grid'       => 1,
