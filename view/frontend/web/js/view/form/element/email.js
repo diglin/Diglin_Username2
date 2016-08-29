@@ -13,9 +13,10 @@ define([
     'Magento_Customer/js/action/login',
     'Magento_Checkout/js/model/quote',
     'Magento_Checkout/js/checkout-data',
+    'Diglin_Username/js/checkout-data',
     'Magento_Checkout/js/model/full-screen-loader',
     'mage/validation'
-], function ($, Component, ko, customer, checkEmailAvailability, loginAction, quote, checkoutData, fullScreenLoader) {
+], function ($, Component, ko, customer, checkEmailAvailability, loginAction, quote, checkoutData, customCheckoutData, fullScreenLoader) {
     'use strict';
 
     var validatedEmail = checkoutData.getValidatedEmailValue();
@@ -28,12 +29,15 @@ define([
         defaults: {
             template: 'Diglin_Username/form/element/email',
             email: checkoutData.getInputFieldEmailValue(),
+            username: customCheckoutData.getInputFieldUsernameValue(),
             emailFocused: false,
+            usernameFocused: false,
             isLoading: false,
             isPasswordVisible: false,
             listens: {
                 email: 'emailHasChanged',
-                emailFocused: 'validateEmail'
+                emailFocused: 'validateEmail',
+                username: 'usernameHasChanged'
             }
         },
         checkDelay: 2000,
@@ -50,7 +54,7 @@ define([
          */
         initObservable: function () {
             this._super()
-                .observe(['email', 'emailFocused', 'isLoading', 'isPasswordVisible']);
+                .observe(['email', 'username', 'emailFocused', 'isLoading', 'isPasswordVisible']);
 
             return this;
         },
@@ -79,6 +83,21 @@ define([
         },
 
         /**
+         * Callback on changing username property
+         */
+        usernameHasChanged: function () {
+            var self = this;
+
+            clearTimeout(this.emailCheckTimeout);
+
+            this.emailCheckTimeout = setTimeout(function () {
+                self.checkUsernameAvailability();
+            }, self.checkDelay);
+
+            customCheckoutData.setInputFieldUsernameValue(self.username());
+        },
+
+        /**
          * Check email existing.
          */
         checkEmailAvailability: function () {
@@ -87,6 +106,25 @@ define([
             this.isEmailCheckComplete = $.Deferred();
             this.isLoading(true);
             this.checkRequest = checkEmailAvailability(this.isEmailCheckComplete, this.email());
+
+            $.when(this.isEmailCheckComplete).done(function () {
+                self.isPasswordVisible(false);
+            }).fail(function () {
+                self.isPasswordVisible(true);
+            }).always(function () {
+                self.isLoading(false);
+            });
+        },
+
+        /**
+         * Check email existing.
+         */
+        checkUsernameAvailability: function () {
+            var self = this;
+            this.validateRequest();
+            this.isEmailCheckComplete = $.Deferred();
+            this.isLoading(true);
+            this.checkRequest = checkEmailAvailability(this.isEmailCheckComplete, this.username());
 
             $.when(this.isEmailCheckComplete).done(function () {
                 self.isPasswordVisible(false);
