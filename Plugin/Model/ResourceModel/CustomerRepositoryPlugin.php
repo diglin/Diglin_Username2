@@ -128,12 +128,12 @@ class CustomerRepositoryPlugin
         if ($customer->getId()) {
             $customerDataOriginal = $subject->get($customer->getEmail(), $customer->getWebsiteId());
             $originalUsernameAttribute = $customerDataOriginal->getCustomAttribute('username');
-            if ($usernameAttribute) {
+            if ($originalUsernameAttribute) {
                 $usernameOriginal = $originalUsernameAttribute->getValue();
             }
         }
 
-        if (!is_null($customerDataOriginal) && $usernameOriginal != $username) {
+        if (!is_null($usernameOriginal) && $usernameOriginal != $username) {
 
             // @todo return true even in none checkout process which is not expected
 //            $guestMethod = $this->checkoutHelper->isAllowedGuestCheckout($this->checkoutHelper->getQuote());
