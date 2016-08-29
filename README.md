@@ -26,6 +26,12 @@ TODO
 
 ## Uninstall
 
+```
+cd path/to/my/magento/project
+bin/magento module:uninstall Diglin_Username
+```
+
+TEMPORARY SOLUTION from your database UI:
 ````
 DELETE FROM eav_attribute WHERE attribute_code LIKE '%username%';
 ALTER TABLE sales_flat_quote DROP COLUMN 'customer_username'; 
