@@ -24,6 +24,14 @@ TODO
 
 TODO 
 
+## Uninstall
+
+````
+DELETE FROM eav_attribute WHERE attribute_code LIKE '%username%';
+ALTER TABLE sales_flat_quote DROP COLUMN 'customer_username'; 
+ALTER TABLE sales_flat_order DROP COLUMN 'customer_username';
+ALTER TABLE customer_grid_flat DROP COLUMN 'username';
+```
 
 ## Author
 
