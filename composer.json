@@ -17,7 +17,7 @@
     "hoa/regex": "~1.0"
   },
   "type": "magento2-module",
-  "version": "1.0.0-beta",
+  "version": "2.0.0-beta",
   "license": [
     "OSL-3.0",
     "AFL-3.0"
