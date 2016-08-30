@@ -26,7 +26,7 @@ cd path/to/my/magento/project
 composer.phar require 'diglin/module-username'
 bin/magento module:enable Diglin_Username
 bin/magento setup:upgrade
-bni/magento setup:di:compile
+bin/magento setup:di:compile
 ```
 
 ## Uninstall
@@ -34,14 +34,6 @@ bni/magento setup:di:compile
 ```
 cd path/to/my/magento/project
 bin/magento module:uninstall -r Diglin_Username
-```
-
-TEMPORARY SOLUTION from your database UI:
-````
-DELETE FROM eav_attribute WHERE attribute_code LIKE '%username%';
-ALTER TABLE sales_flat_quote DROP COLUMN 'customer_username'; 
-ALTER TABLE sales_flat_order DROP COLUMN 'customer_username';
-ALTER TABLE customer_grid_flat DROP COLUMN 'username';
 ```
 
 ## Author
