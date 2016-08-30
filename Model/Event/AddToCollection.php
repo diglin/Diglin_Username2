@@ -16,7 +16,9 @@
  */
 
 namespace Diglin\Username\Model\Event;
+
 use Magento\Config\Model\Config;
+use Magento\Eav\Model\Entity\Collection\AbstractCollection;
 use Magento\Framework\Event\ObserverInterface;
 
 /**
@@ -34,12 +36,11 @@ class AddToCollection implements ObserverInterface
      */
     public function execute(\Magento\Framework\Event\Observer $observer)
     {
-        /* @var $collection Mage_Eav_Model_Entity_Collection_Abstract */
+        /* @var $collection AbstractCollection */
         $collection = $observer->getEvent()->getCollection();
         $entity = $collection->getEntity();
         if (!empty($entity) && $entity->getType() == 'customer') {
             $collection->addAttributeToSelect('username');
         }
-
     }
 }

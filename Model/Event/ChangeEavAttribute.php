@@ -28,17 +28,14 @@ use Magento\Framework\Event\ObserverInterface;
 class ChangeEavAttribute implements ObserverInterface
 {
     /**
-     * @var Config
+     * @var ScopeConfigInterface
      */
     private $config;
+
     /**
      * @var AttributeFactory
      */
     private $attributeFactory;
-    /**
-     * @var CustomAttributesDataInterface
-     */
-    private $attributesDataInterface;
 
     public function __construct(
         ScopeConfigInterface $config,

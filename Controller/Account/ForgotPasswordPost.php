@@ -25,6 +25,7 @@ class ForgotPasswordPost extends \Magento\Customer\Controller\Account\ForgotPass
         $resultRedirect = $this->resultRedirectFactory->create();
         $email = (string)$this->getRequest()->getPost('email');
         if ($email) {
+
 // Diglin - Commented as not needed
 //            if (!\Zend_Validate::is($email, 'EmailAddress')) {
 //                $this->session->setForgottenEmail($email);
