@@ -8,7 +8,7 @@
  * @copyright   Copyright (c) 2011-2016 Diglin (http://www.diglin.com)
  */
 
-use \Diglin\Username\Setup;
+use Diglin\Username\Setup;
 use Magento\Customer\Model\Customer;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\SchemaSetupInterface;
