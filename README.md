@@ -21,7 +21,13 @@ It's a BETA. Lots of things have not been yet implemented or is a work in progre
 
 ## Installation
 
-`composer require 'diglin/module-username'`
+```
+cd path/to/my/magento/project
+composer.phar require 'diglin/module-username'
+bin/magento module:enable Diglin_Username
+bin/magento setup:upgrade
+bni/magento setup:di:compile
+```
 
 ## Uninstall
 
